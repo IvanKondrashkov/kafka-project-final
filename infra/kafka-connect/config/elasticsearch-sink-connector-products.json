@@ -1,0 +1,25 @@
+{
+  "name": "elasticsearch-sink-products",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "topics": "filtered-orders",
+    "connection.url": "http://elasticsearch:9200",
+    "type.name": "_doc",
+    "key.ignore": "true",
+    "schema.ignore": "true",
+    "behavior.on.malformed.documents": "warn",
+    "elasticsearch.index.auto.create": "true",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "value.converter.encoding": "UTF-8",
+
+    "connection.timeout.ms": "5000",
+    "read.timeout.ms": "10000",
+    "max.retries": "10",
+    "retry.backoff.ms": "3000",
+    "flush.synchronously": "true",
+    "write.method": "upsert"
+  }
+}

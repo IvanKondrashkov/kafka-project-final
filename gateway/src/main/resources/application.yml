@@ -1,0 +1,19 @@
+server:
+  port: 8070
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: shop-api
+          uri: http://shop-api:8071
+          predicates:
+            - Path=/api/shop/**
+        - id: filter-api
+          uri: http://filter-api:8072
+          predicates:
+            - Path=/api/filter/**
+        - id: client-api
+          uri: http://client-api:8073
+          predicates:
+            - Path=/api/client/**
