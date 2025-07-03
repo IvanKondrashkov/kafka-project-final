@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' apply true
+}
+
+group 'ru.practicum'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+ext {
+    kafkaSchemaRegistry = '7.5.1'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation project(':common-dto')
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
+    implementation "io.confluent:kafka-schema-registry-client:$kafkaSchemaRegistry"
+    implementation "io.confluent:kafka-json-serializer:$kafkaSchemaRegistry"
+    implementation "io.confluent:kafka-json-schema-serializer:$kafkaSchemaRegistry"
+}
+
+test {
+    useJUnitPlatform()
+}

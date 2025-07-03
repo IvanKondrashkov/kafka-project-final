@@ -1,0 +1,39 @@
+server:
+  port: 8073
+
+spring:
+  elasticsearch:
+    host: elasticsearch
+    port: 9200
+
+  kafka:
+    bootstrap-servers: kafka-0:9092,kafka-1:9092,kafka-2:9092
+
+    # Producer settings
+    producer:
+      acks: all
+      retries: 3
+      properties:
+        security.protocol: SASL_SSL
+        sasl.mechanism: PLAIN
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="producer" password="producer-secret";
+
+    # SSL settings
+    ssl:
+      trust-store-location: file:kafka-certs/kafka.truststore.jks
+      trust-store-password: password
+      key-store-location: file:kafka-certs/kafka.keystore.jks
+      key-store-password: password
+      key-password: password
+
+    # Schema Registry settings
+    properties:
+      schema.registry.url: http://schema-registry:8081
+      schema.registry.basic.auth.user.info: admin:admin-secret
+
+    # Admin client settings
+    admin:
+      properties:
+        security.protocol: SASL_SSL
+        sasl.mechanism: PLAIN
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";

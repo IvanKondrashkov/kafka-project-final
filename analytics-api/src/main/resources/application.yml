@@ -1,0 +1,55 @@
+server:
+  port: 8074
+
+spring:
+  analytics:
+    processing:
+      interval:
+        cron: "0 */5 * * * *"
+
+  elasticsearch:
+    host: elasticsearch
+    port: 9200
+
+  spark:
+    app:
+      name: analytics
+    ui:
+      enabled: false
+    kryo:
+      registrationRequired: false
+    master:
+      uri: spark://spark-master:7077
+    driver:
+      allowMultipleContexts: true
+      extraClassPath: /opt/bitnami/spark/jars
+    executor:
+      extraClassPath: /opt/bitnami/spark/jars
+    kafka:
+      truststore:
+        location: /kafka-certs/kafka.truststore.jks
+      keystore:
+        location: /kafka-certs/kafka.keystore.jks
+      startingOffsets: earliest
+
+  hadoop:
+    hdfs:
+      uri: hdfs://hadoop-namenode:9000
+
+  kafka:
+    bootstrap-servers: kafka-0:9092,kafka-1:9092,kafka-2:9092
+
+    # SSL settings
+    ssl:
+      trust-store-location: file:kafka-certs/kafka.truststore.jks
+      trust-store-password: password
+      key-store-location: file:kafka-certs/kafka.keystore.jks
+      key-store-password: password
+      key-password: password
+
+    # Admin client settings
+    admin:
+      properties:
+        security.protocol: SASL_SSL
+        sasl.mechanism: PLAIN
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
